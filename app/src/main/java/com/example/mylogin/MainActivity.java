@@ -2,8 +2,11 @@ package com.example.mylogin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -12,6 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mylogin.databinding.ActivityMapsBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,6 +34,11 @@ private TextView register;
 private EditText email , password;
 private Button Login;
 private FirebaseAuth mAuth;
+
+    private GoogleMap mMap;
+    private ActivityMapsBinding binding;
+    SupportMapFragment supportMapFragment;
+    FusedLocationProviderClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +93,7 @@ private FirebaseAuth mAuth;
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     //redirect to main page
-                    startActivity(new Intent(MainActivity.this,MainAppPage.class));
+                    startActivity(new Intent(MainActivity.this,MapsActivity.class));
                 }
                 else {
                     Toast.makeText(MainActivity.this, "Failed to log in check credentials",Toast.LENGTH_LONG).show();

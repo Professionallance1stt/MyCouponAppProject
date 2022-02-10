@@ -4,14 +4,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainAppPage">
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="177dp"
-        android:layout_height="56dp"
-        android:text="Welcome"
-        android:textSize="40dp"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="227dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".MainAppPage"/>
