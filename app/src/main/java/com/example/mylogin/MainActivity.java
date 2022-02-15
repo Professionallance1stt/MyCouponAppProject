@@ -92,7 +92,7 @@ private FirebaseAuth mAuth;
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    //redirect to main page
+                    //redirect to maps page
                     startActivity(new Intent(MainActivity.this,MapsActivity.class));
                 }
                 else {
