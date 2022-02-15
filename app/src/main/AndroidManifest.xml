@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mylogin">
         <activity
+            android:name=".Categories"
+            android:exported="false" />
+        <activity
             android:name=".MainAppPage"
             android:exported="false" />
         <activity
