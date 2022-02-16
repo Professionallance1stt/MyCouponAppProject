@@ -1,5 +1,6 @@
 package com.example.mylogin;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     // They have to be same name that it is on activity_main.xml
-private TextView register;
+private TextView register, forgot_password;
 private EditText email , password;
 private Button Login;
 private FirebaseAuth mAuth;
@@ -46,11 +47,15 @@ private FirebaseAuth mAuth;
 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+
         Login = (Button) findViewById(R.id.Login);
         Login.setOnClickListener(this);
 
         register = (TextView) findViewById(R.id.register);
         register.setOnClickListener(this);
+
+        forgot_password = (TextView)findViewById(R.id.forgot_password);
+        forgot_password.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -66,7 +71,9 @@ private FirebaseAuth mAuth;
             case R.id.Login:
                 UserLogin();
                 break;
-
+            case R.id.forgot_password:
+                startActivity(new Intent(this,ForgotPassword.class));
+                break;
         }
     }
 
