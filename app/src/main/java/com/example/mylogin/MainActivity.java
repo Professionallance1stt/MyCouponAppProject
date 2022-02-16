@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+
     // They have to be same name that it is on activity_main.xml
 private TextView register;
 private EditText email , password;
