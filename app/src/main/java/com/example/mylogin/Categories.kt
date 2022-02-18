@@ -2,10 +2,7 @@ package com.example.mylogin
 
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.HorizontalScrollView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -100,6 +97,9 @@ class Categories : AppCompatActivity() {
             llmain.tag = category + 1
             categoryslider.tag = distinct[category]
             categoryslider.addView(llmain2)
+            val cateName = TextView(this)
+            cateName.text = distinct[category]
+            llmain.addView(cateName)
             llmain.addView(categoryslider,category)
         }
 
