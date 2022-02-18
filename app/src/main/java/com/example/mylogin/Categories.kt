@@ -3,7 +3,9 @@ package com.example.mylogin
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -55,19 +57,55 @@ class Categories : AppCompatActivity() {
 
             }
         }
-        //Adds the buttons to the layout
-        for (coupon in 0 until coupList.size) {
-            val llmain = findViewById<LinearLayout>(R.id.ll_main_layout)
-            val buttondynamic = Button(this)
-            buttondynamic.layoutParams = LinearLayout.LayoutParams(
+        val distinct = catList.distinct().toList()
+        val rl = RelativeLayout(this)
+        val llmain = LinearLayout(this)
+
+
+
+
+        for(category in distinct.indices) {
+            rl.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+            val llmain2 = LinearLayout(this)
+
+            llmain.layoutParams =
+                ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            llmain.orientation = LinearLayout.HORIZONTAL
+
+            val categoryslider = HorizontalScrollView(this)
+            categoryslider.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            buttondynamic.text = coupList[coupon].id
-            buttondynamic.tag = coupList[coupon].id
 
-            llmain.addView(buttondynamic)
+
+            for(coupon in 0 until coupList.size) {
+                val buttondynamic = Button(this)
+                buttondynamic.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                llmain2.layoutParams =
+                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                llmain2.orientation = LinearLayout.HORIZONTAL
+                buttondynamic.text = coupList[coupon].getValues()
+                buttondynamic.tag = coupList[coupon].id
+                if(coupList[coupon].getCate() == distinct[category]) {
+                    llmain2.addView(buttondynamic)
+                }
+            }
+            llmain2.tag = category
+            llmain.tag = category + 1
+            categoryslider.tag = distinct[category]
+            categoryslider.addView(llmain2)
+            llmain.addView(categoryslider,category)
         }
+
+        rl.addView(llmain)
+
+        this.setContentView(rl)
 
     }
 }
