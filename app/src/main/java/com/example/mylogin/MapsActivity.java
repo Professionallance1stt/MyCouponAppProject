@@ -1,8 +1,10 @@
 package com.example.mylogin;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,7 +31,7 @@ public class MapsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //Set the layout file as the content view.
         setContentView(R.layout.activity_maps);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -44,6 +46,9 @@ public class MapsActivity extends AppCompatActivity {
             //Call Method
             getCurrentLocation();
         }
+
+
+
 
     }
 
@@ -83,6 +88,16 @@ public class MapsActivity extends AppCompatActivity {
                             //Add marker on map
                             googleMap.addMarker(options);
 
+
+                            // pulls google maps but we need to make it in a fragment
+                            /*
+                            Uri gmmIntentUri = Uri.parse("geo:0,0?q=grocery_stores");
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+
+                            startActivity(mapIntent);
+                            */
+
                         }
                     });
                 }
@@ -106,16 +121,5 @@ public class MapsActivity extends AppCompatActivity {
     }
 
 
-/*
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
-
-*/
 }
