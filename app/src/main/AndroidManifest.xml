@@ -11,10 +11,10 @@
         android:theme="@style/Theme.Mylogin">
         <activity
             android:name=".CouponPage"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Categories"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainAppPage"
             android:exported="false" />

@@ -1,5 +1,6 @@
 package com.example.mylogin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.*
@@ -15,6 +16,8 @@ class Categories : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categories)
         val coupList: MutableList<Coupons> = ArrayList()
+        var coupLists = CouponList()
+        coupLists = coupLists.getInstance()!!
         val catList: MutableList<String> = ArrayList()
         var line: String?
         val minput = InputStreamReader(assets.open("tessts.csv"))
@@ -50,6 +53,7 @@ class Categories : AppCompatActivity() {
                 if (number % 10 == 0) {
                     catList.add(row[8])
                     coupList.add(coupon)
+                    coupLists.PopulateList(coupon)
                 }
 
             }
@@ -84,12 +88,17 @@ class Categories : AppCompatActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-                llmain2.layoutParams =
-                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                llmain2.orientation = LinearLayout.HORIZONTAL
+                llmain2.setLayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+                llmain2.setOrientation(LinearLayout.HORIZONTAL)
                 buttondynamic.text = coupList[coupon].getValues()
                 buttondynamic.tag = coupList[coupon].id
-                if(coupList[coupon].getCate() == distinct[category]) {
+                buttondynamic.setOnClickListener()
+                {
+                    val intent = Intent(this, CouponPage::class.java)
+                    startActivity(intent)
+                    coupLists.indexer = coupon
+                }
+                if(coupList[coupon].cate== distinct[category]) {
                     llmain2.addView(buttondynamic)
                 }
             }
@@ -98,12 +107,14 @@ class Categories : AppCompatActivity() {
             categoryslider.tag = distinct[category]
             categoryslider.addView(llmain2)
             val cateName = TextView(this)
+            cateName.setLayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
             cateName.text = distinct[category]
             llmain.addView(cateName)
             llmain.addView(categoryslider,category)
         }
 
         rl.addView(llmain)
+
 
         this.setContentView(rl)
 
