@@ -17,7 +17,6 @@ class Categories : AppCompatActivity() {
         setContentView(R.layout.activity_categories)
         val coupList: MutableList<Coupons> = ArrayList()
         var coupLists = CouponList()
-        coupLists = coupLists.getInstance()!!
         val catList: MutableList<String> = ArrayList()
         var line: String?
         val minput = InputStreamReader(assets.open("tessts.csv"))
@@ -87,6 +86,7 @@ class Categories : AppCompatActivity() {
                 buttondynamic.layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
+
                 )
                 llmain2.setLayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
                 llmain2.setOrientation(LinearLayout.HORIZONTAL)
@@ -95,8 +95,13 @@ class Categories : AppCompatActivity() {
                 buttondynamic.setOnClickListener()
                 {
                     val intent = Intent(this, CouponPage::class.java)
+                   intent.putExtra("Description",coupList[coupon].desc)
+                    intent.putExtra("Expiration",coupList[coupon].enddate)
+                    intent.putExtra("Title",coupList[coupon].title)
+                    intent.putExtra("CODE",coupList[coupon].code)
+
+
                     startActivity(intent)
-                    coupLists.indexer = coupon
                 }
                 if(coupList[coupon].cate== distinct[category]) {
                     llmain2.addView(buttondynamic)
@@ -112,7 +117,6 @@ class Categories : AppCompatActivity() {
             llmain.addView(cateName)
             llmain.addView(categoryslider,category)
         }
-
         rl.addView(llmain)
 
 
@@ -120,5 +124,7 @@ class Categories : AppCompatActivity() {
 
     }
 }
+
+
 
 

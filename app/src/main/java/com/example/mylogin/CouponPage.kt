@@ -10,15 +10,20 @@ class CouponPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coupon_page)
+
         var coupLists = CouponList()
-        coupLists = coupLists.getInstance()!!
+        coupLists.coupList
+
         val couponName = findViewById<TextView>(R.id.txtCoupon)
-        couponName.text = coupLists.coupList[coupLists.indexer!!].title +" " +  coupLists.coupList[coupLists.indexer!!].values
+        couponName.text = intent.getStringExtra("Title")
         val expiration = findViewById<TextView>(R.id.textExp)
-        couponName.text = coupLists.coupList[coupLists.indexer!!].enddate
+        expiration.text = intent.getStringExtra("Expiration")
         val desc = findViewById<TextView>(R.id.textDesc)
-        couponName.text = coupLists.coupList[coupLists.indexer!!].desc
+        desc.text =  intent.getStringExtra("Description")
         val barCode = findViewById<ImageView>(R.id.barCode)
 
     }
+
+
+
 }
