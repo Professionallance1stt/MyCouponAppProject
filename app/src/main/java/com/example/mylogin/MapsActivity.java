@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.mylogin.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,15 +17,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PointOfInterest;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-public class MapsActivity extends AppCompatActivity {
+public class MapsActivity extends AppCompatActivity implements GoogleMap.OnPoiClickListener{
 
 
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
+
+    private ActivityMapsBinding binding;
+    private GoogleMap temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,10 @@ public class MapsActivity extends AppCompatActivity {
         task = client.getLastLocation();
 
 
+
+
+
+
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -82,6 +92,8 @@ public class MapsActivity extends AppCompatActivity {
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 10));
                             //Add marker on map
                             googleMap.addMarker(options);
+                            setMapLongClick(googleMap);
+                            setPoiClick(googleMap);
 
                         }
                     });
@@ -105,17 +117,48 @@ public class MapsActivity extends AppCompatActivity {
         }
     }
 
+    private void setPoiClick(final GoogleMap map)
+    {
+         temp = map;
+        map.setOnPoiClickListener(new GoogleMap.OnPoiClickListener()
+        {
 
-/*
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            @Override
+            public void onPoiClick(PointOfInterest pointOfInterest)
+            {
+                Marker poiMarker = temp.addMarker(new MarkerOptions()
+
+                        .position(pointOfInterest.latLng)
+                        .title(pointOfInterest.name));
+                poiMarker.showInfoWindow();
+            }
+        });
+
     }
 
-*/
+    private void setMapLongClick(final GoogleMap map) {
+        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+            @Override
+            public void onMapLongClick(LatLng latLng)
+            {
+                map.addMarker(new MarkerOptions().position(latLng));
+            }
+        });
+    }
+
+    @Override
+    public void onPoiClick(PointOfInterest pointOfInterest)
+    {
+        Marker poiMarker = temp.addMarker(new MarkerOptions()
+
+                .position(pointOfInterest.latLng)
+                .title(pointOfInterest.name));
+        poiMarker.showInfoWindow();
+    }
+
+
+
+
 }
