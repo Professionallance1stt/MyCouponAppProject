@@ -45,7 +45,7 @@ private TextView register, forgot_password;
 private EditText email , password;
 private Button Login;
 private FirebaseAuth mAuth;
-private final String placeskey = "AIzaSyCv4twMr89yGcbBOm015ymBIH9jsQtoJk4";
+
 
 
 
@@ -71,8 +71,7 @@ private final String placeskey = "AIzaSyCv4twMr89yGcbBOm015ymBIH9jsQtoJk4";
 
         mAuth = FirebaseAuth.getInstance();
 
-       Places.initialize(getApplicationContext(), placeskey);
-        PlacesClient placesClient = Places.createClient(this);
+
 
     }
 

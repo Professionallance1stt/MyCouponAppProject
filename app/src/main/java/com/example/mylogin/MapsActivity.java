@@ -4,6 +4,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +29,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
+
+import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements GoogleMap.OnPoiClickListener{
 
@@ -31,13 +42,25 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnPoiCl
 
     private ActivityMapsBinding binding;
     private GoogleMap temp;
+    private PlacesClient placesClient;
+    private static final int M_MAX_ENTRIES = 5;
+    private String[] likelyPlaceNames;
+    private String[] likelyPlaceAddresses;
+    private List[] likelyPlaceAttributions;
+    private LatLng[] likelyPlaceLatLngs;
+    private String key = "AIzaSyCG1STojkyeKsRXgKAGq0pliHs1xNRLqtk";
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_maps);
 
+        Places.initialize(getApplicationContext(), key);
+        placesClient = Places.createClient(this);
+
+
+      Object mPlaceDetectionClient = Places.createClient(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.google_map);
@@ -50,7 +73,9 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnPoiCl
             //Call Method
             getCurrentLocation();
         }
-
+            else{
+            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
     }
 
     private void getCurrentLocation() {
@@ -65,7 +90,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnPoiCl
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+
             return;
         }
         task = client.getLastLocation();
@@ -156,9 +181,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnPoiCl
                 .position(pointOfInterest.latLng)
                 .title(pointOfInterest.name));
         poiMarker.showInfoWindow();
+
+
+        };
+
+
     }
 
 
 
 
-}
